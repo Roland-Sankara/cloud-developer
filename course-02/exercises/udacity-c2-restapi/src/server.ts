@@ -7,6 +7,8 @@ import bodyParser from 'body-parser';
 
 import { V0MODELS } from './controllers/v0/model.index';
 
+const pass = require('dotenv').config();
+
 (async () => {
   await sequelize.addModels(V0MODELS);
   await sequelize.sync();
@@ -16,6 +18,8 @@ import { V0MODELS } from './controllers/v0/model.index';
   
   app.use(bodyParser.json());
 
+  console.log(pass);
+
   //CORS Should be restricted
   app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "http://localhost:8100");
@@ -23,7 +27,7 @@ import { V0MODELS } from './controllers/v0/model.index';
     next();
   });
 
-  app.use('/api/v0/', IndexRouter)
+  app.use('/api/v0/', IndexRouter);
 
   // Root URI call
   app.get( "/", async ( req, res ) => {
